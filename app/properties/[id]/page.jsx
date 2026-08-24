@@ -22,6 +22,8 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import MailIcon from '@mui/icons-material/Mail';
 import PropertyCard from '@/components/PropertyCard';
 import { getPropertyById, getSimilarProperties } from '@/lib/api-service';
 
@@ -424,6 +426,44 @@ export default function PropertyDetailPage() {
 
               </Grid>
             </Box>
+
+            {/* Metro Manager Contact Info */}
+            {property && (property.metro_manager_name || property.metro_manager_phone || property.metro_manager_email || property.manager_name || property.manager_phone || property.manager_email) && (
+              <Box
+                sx={{
+                  backgroundColor: theme.palette.background.paper,
+                  p: 3,
+                  borderRadius: 2,
+                  mb: 3,
+                  border: `1px solid ${theme.palette.divider}`,
+                }}
+              >
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: theme.palette.text.primary }}>
+                  Property Manager
+                </Typography>
+                {(property.metro_manager_name || property.manager_name) && (
+                  <Typography variant="body1" sx={{ color: theme.palette.text.secondary, mb: 1 }}>
+                    {property.metro_manager_name || property.manager_name}
+                  </Typography>
+                )}
+                {(property.metro_manager_phone || property.manager_phone) && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    <LocalPhoneIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                      {property.metro_manager_phone || property.manager_phone}
+                    </Typography>
+                  </Box>
+                )}
+                {(property.metro_manager_email || property.manager_email) && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <MailIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                      {property.metro_manager_email || property.manager_email}
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+            )}
 
             {/* Contact Button */}
             <Box
