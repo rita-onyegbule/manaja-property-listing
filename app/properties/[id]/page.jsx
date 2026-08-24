@@ -25,7 +25,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import MailIcon from '@mui/icons-material/Mail';
 import PropertyCard from '@/components/PropertyCard';
-import { getPropertyByIdApi, getSimilarProperties, getPropertyMetroManager } from '../../lib/api-service';
+import { getPropertyByIdApi, getSimilarProperties, getPropertyMetroManager } from '@/lib/api-service';
 
 export default function PropertyDetailPage() {
   const params = useParams();
