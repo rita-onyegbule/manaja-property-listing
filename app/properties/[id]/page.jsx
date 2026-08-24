@@ -75,6 +75,16 @@ export default function PropertyDetailPage() {
     fetchProperty();
   }, [params.id]);
 
+  // Debug: log property data to check available fields
+  useEffect(() => {
+    if (property) {
+      console.log('=== PROPERTY DETAIL DEBUG ===');
+      console.log('Property data:', property);
+      console.log('Available fields:', Object.keys(property));
+      console.log('============================');
+    }
+  }, [property]);
+
   // Loading state
   if (loading) {
     return (
