@@ -22,17 +22,14 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import MailIcon from '@mui/icons-material/Mail';
 import PropertyCard from '@/components/PropertyCard';
-import { getPropertyById, getSimilarProperties, getPropertyMetroManager } from '@/lib/api-service';
+import { getPropertyById, getSimilarProperties } from '@/lib/api-service';
 
 export default function PropertyDetailPage() {
   const params = useParams();
   const theme = useTheme();
   const [property, setProperty] = useState(null);
   const [similarProperties, setSimilarProperties] = useState([]);
-  const [metroManager, setMetroManager] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -63,16 +60,11 @@ export default function PropertyDetailPage() {
         // Get similar properties
         const similar = await getSimilarProperties(params.id);
         setSimilarProperties(similar || []);
-
-        // Fetch metro manager details
-        const metroManagerData = await getPropertyMetroManager(propertyData.id || params.id);
-        setMetroManager(metroManagerData);
       } catch (err) {
         console.error('Failed to fetch property:', err);
         setError(err.message || 'Failed to load property details.');
         setProperty(null);
         setSimilarProperties([]);
-        setMetroManager(null);
       } finally {
         setLoading(false);
       }
@@ -431,50 +423,6 @@ export default function PropertyDetailPage() {
                 </Grid>
 
               </Grid>
-            </Box>
-
-            {/* Metro Manager Contact Info */}
-            <Box
-              sx={{
-                backgroundColor: theme.palette.background.paper,
-                p: 3,
-                borderRadius: 2,
-                mb: 3,
-                border: `1px solid ${theme.palette.divider}`,
-              }}
-            >
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: theme.palette.text.primary }}>
-                Property Manager
-              </Typography>
-              {metroManager ? (
-                <>
-                  {metroManager.name && (
-                    <Typography variant="body1" sx={{ color: theme.palette.text.secondary, mb: 1 }}>
-                      {metroManager.name}
-                    </Typography>
-                  )}
-                  {metroManager.phone && (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                      <LocalPhoneIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
-                      <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                        {metroManager.phone}
-                      </Typography>
-                    </Box>
-                  )}
-                  {metroManager.email && (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <MailIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
-                      <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                        {metroManager.email}
-                      </Typography>
-                    </Box>
-                  )}
-                </>
-              ) : (
-                <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                  No property manager information available
-                </Typography>
-              )}
             </Box>
 
             {/* Contact Button */}
