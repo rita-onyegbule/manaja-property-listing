@@ -81,6 +81,18 @@ export default function PropertyDetailPage() {
       console.log('=== PROPERTY DETAIL DEBUG ===');
       console.log('Property data:', property);
       console.log('Available fields:', Object.keys(property));
+      console.log('Manager/Landlord fields:', {
+        manager_name: property.manager_name,
+        manager_phone: property.manager_phone,
+        manager_email: property.manager_email,
+        landlord_name: property.landlord_name,
+        landlord_phone: property.landlord_phone,
+        landlord_email: property.landlord_email,
+        manager_display_phone_alternate: property.manager_display_phone_alternate,
+        manager_alternate_phone: property.manager_alternate_phone,
+        manager_display_email_alternate: property.manager_display_email_alternate,
+        manager_alternate_email: property.manager_alternate_email,
+      });
       console.log('============================');
     }
   }, [property]);
@@ -428,7 +440,7 @@ export default function PropertyDetailPage() {
             </Box>
 
             {/* Metro Manager Contact Info */}
-            {property && (property.metro_manager_name || property.metro_manager_phone || property.metro_manager_email || property.manager_name || property.manager_phone || property.manager_email) && (
+            {property && (property.manager_name || property.manager_phone || property.manager_email || property.landlord_name || property.landlord_phone || property.landlord_email) && (
               <Box
                 sx={{
                   backgroundColor: theme.palette.background.paper,
@@ -441,24 +453,49 @@ export default function PropertyDetailPage() {
                 <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: theme.palette.text.primary }}>
                   Property Manager
                 </Typography>
-                {(property.metro_manager_name || property.manager_name) && (
-                  <Typography variant="body1" sx={{ color: theme.palette.text.secondary, mb: 1 }}>
-                    {property.metro_manager_name || property.manager_name}
+                
+                {/* Manager Name */}
+                {(property.manager_name || property.landlord_name) && (
+                  <Typography variant="body1" sx={{ color: theme.palette.text.primary, fontWeight: 600, mb: 1.5 }}>
+                    {property.manager_name || property.landlord_name}
                   </Typography>
                 )}
-                {(property.metro_manager_phone || property.manager_phone) && (
+                
+                {/* Manager Phone - Use display preferences if available */}
+                {(property.manager_phone || property.landlord_phone) && (
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                    <LocalPhoneIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
+                    <LocalPhoneIcon sx={{ fontSize: 18, color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
                     <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                      {property.metro_manager_phone || property.manager_phone}
+                      {property.manager_phone || property.landlord_phone}
                     </Typography>
                   </Box>
                 )}
-                {(property.metro_manager_email || property.manager_email) && (
+                
+                {/* Manager Email - Use display preferences if available */}
+                {(property.manager_email || property.landlord_email) && (
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <MailIcon sx={{ fontSize: 18, color: '#1A4C9E' }} />
+                    <MailIcon sx={{ fontSize: 18, color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
                     <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                      {property.metro_manager_email || property.manager_email}
+                      {property.manager_email || property.landlord_email}
+                    </Typography>
+                  </Box>
+                )}
+                
+                {/* Display alternative contact if preferences indicate */}
+                {property.manager_display_phone_alternate && property.manager_alternate_phone && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+                    <LocalPhoneIcon sx={{ fontSize: 18, color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                      {property.manager_alternate_phone}
+                    </Typography>
+                  </Box>
+                )}
+                
+                {property.manager_display_email_alternate && property.manager_alternate_email && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <MailIcon sx={{ fontSize: 18, color: theme.palette.mode === 'dark' ? '#F5B70C' : '#1A4C9E' }} />
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                      {property.manager_alternate_email}
                     </Typography>
                   </Box>
                 )}
