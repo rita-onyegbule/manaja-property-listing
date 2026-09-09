@@ -35,13 +35,6 @@ export default function PropertyDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [contactDialogOpen, setContactDialogOpen] = useState(false);
-  const [contactForm, setContactForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
 
   // Fetch property data
   useEffect(() => {
@@ -135,21 +128,6 @@ export default function PropertyDetailPage() {
     setCurrentImageIndex((prev) =>
       prev === allImages.length - 1 ? 0 : prev + 1
     );
-  };
-
-  const handleContactChange = (e) => {
-    setContactForm({
-      ...contactForm,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmitContact = () => {
-    console.log('[v0] Contact form submitted:', contactForm);
-    // TODO: Implement actual contact form submission via API
-    setContactDialogOpen(false);
-    setContactForm({ name: '', email: '', phone: '', message: '' });
-    alert('Thank you for your interest! The manager will contact you soon.');
   };
 
   const formatPrice = (price) => {
@@ -503,34 +481,6 @@ export default function PropertyDetailPage() {
               </Box>
             )}
 
-            {/* Contact Button */}
-            <Box
-              sx={{
-                backgroundColor: theme.palette.background.paper,
-                p: 3,
-                borderRadius: 2,
-                mb: 3,
-                border: `1px solid ${theme.palette.divider}`,
-              }}
-            >
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={() => setContactDialogOpen(true)}
-                sx={{
-                  backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
-                  color: theme.palette.mode === 'dark' ? '#F5B70C' : '#fff',
-                  fontWeight: 700,
-                  border: theme.palette.mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
-                  '&:hover': { 
-                    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.25)' : '#143B7A',
-                    borderColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.5)' : 'none',
-                  },
-                }}
-              >
-                Contact About This Property
-              </Button>
-            </Box>
           </Grid>
         </Grid>
 
@@ -583,75 +533,6 @@ export default function PropertyDetailPage() {
         )}
       </Container>
 
-      {/* Contact Dialog */}
-      <Dialog 
-        open={contactDialogOpen} 
-        onClose={() => setContactDialogOpen(false)} 
-        maxWidth="sm" 
-        fullWidth
-        PaperProps={{
-          sx: {
-            backgroundColor: theme.palette.background.paper,
-          },
-        }}
-      >
-        <DialogTitle sx={{ color: theme.palette.text.primary }}>Contact About This Property</DialogTitle>
-        <DialogContent sx={{ pt: 2 }}>
-          <TextField
-            fullWidth
-            label="Your Name"
-            name="name"
-            value={contactForm.name}
-            onChange={handleContactChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Email Address"
-            name="email"
-            type="email"
-            value={contactForm.email}
-            onChange={handleContactChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Phone Number"
-            name="phone"
-            value={contactForm.phone}
-            onChange={handleContactChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            fullWidth
-            label="Message"
-            name="message"
-            multiline
-            rows={4}
-            value={contactForm.message}
-            onChange={handleContactChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button 
-            onClick={() => setContactDialogOpen(false)}
-            sx={{ color: theme.palette.text.primary }}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSubmitContact}
-            variant="contained"
-            sx={{ 
-              backgroundColor: theme.palette.mode === 'dark' ? 'rgba(245, 183, 12, 0.15)' : '#1A4C9E',
-              color: theme.palette.mode === 'dark' ? '#F5B70C' : '#fff',
-              border: theme.palette.mode === 'dark' ? '1px solid rgba(245, 183, 12, 0.3)' : 'none',
-            }}
-          >
-            Send Message
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Box>
   );
 }
