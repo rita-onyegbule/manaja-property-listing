@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+// Backend API URL
 const backendUrl = 'https://manaja-backend-production.up.railway.app';
 
 
