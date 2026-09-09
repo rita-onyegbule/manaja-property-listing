@@ -72,9 +72,6 @@ export default function PropertyCard({ property }) {
               display: 'block',
               transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
-            onError={(e) => {
-              e.target.src = '/placeholder-property.jpg';
-            }}
           />
         ) : (
           <Box

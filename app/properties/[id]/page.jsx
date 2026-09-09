@@ -176,7 +176,8 @@ export default function PropertyDetailPage() {
   };
 
   const handleImageError = (e) => {
-    e.target.src = '/placeholder-image.jpg';
+    // Hide the image on error to prevent broken image icons
+    e.target.style.display = 'none';
   };
 
   // Render the rest of the component as before...
